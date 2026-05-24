@@ -699,6 +699,9 @@
     .hero-inner { grid-template-columns: 1fr; gap: 40px; }
     .hero-right { order: -1; }
 
+    /* TaleMe grid */
+    #taleme-grid { grid-template-columns: 1fr; }
+
     /* Sections */
     .section { padding: 60px 20px; }
     .cta-section { padding: 64px 20px; }
@@ -1125,6 +1128,7 @@
 
   <div class="nav-links">
     <a href="#product"    class="nav-link">BillKadai</a>
+    <a href="#taleme"     class="nav-link">TaleMe</a>
     <a href="#features"   class="nav-link">Features</a>
     <a href="#howitworks" class="nav-link">How it Works</a>
     <a href="#about"      class="nav-link">About</a>
@@ -1168,7 +1172,7 @@
         </a>
         <a href="#about" class="btn btn-outline">About Us</a>
       </div>
-      <p class="a5 small-text">1 app live &nbsp;·&nbsp; More in development &nbsp;·&nbsp; 100% free</p>
+      <p class="a5 small-text">2 apps &nbsp;·&nbsp; Android &nbsp;·&nbsp; Free &amp; Freemium</p>
     </div>
 
     <!-- Right: BillKadai Product Card -->
@@ -1221,10 +1225,10 @@
 <!-- ═══════════════════ STATS ═══════════════════ -->
 <div class="stats-strip reveal">
   <div class="stats-inner">
-    <div class="stat-item"><div class="stat-n">1</div><div class="stat-l">App Live</div></div>
+    <div class="stat-item"><div class="stat-n">2</div><div class="stat-l">Apps Live</div></div>
     <div class="stat-item"><div class="stat-n">5</div><div class="stat-l">Languages</div></div>
     <div class="stat-item"><div class="stat-n">∞</div><div class="stat-l">Offline First</div></div>
-    <div class="stat-item"><div class="stat-n">₹0</div><div class="stat-l">Free Forever</div></div>
+    <div class="stat-item"><div class="stat-n">₹0</div><div class="stat-l">Core Apps Free</div></div>
   </div>
 </div>
 
@@ -1463,25 +1467,156 @@
   </div>
 </div>
 
-<!-- ═══════════════════ COMING NEXT ═══════════════════ -->
-<div class="section">
+<!-- ═══════════════════ TALEME ═══════════════════ -->
+<div id="taleme" class="section" style="border-top:1px solid var(--border);">
   <div class="section-inner">
-    <div class="reveal">
-      <div class="eyebrow"><div class="eyebrow-dot"></div>What's Next</div>
-      <h2 class="title" style="margin-bottom:36px;">More products<br>in development.</h2>
-      <div class="next-card">
-        <div style="flex:1;min-width:200px;">
-          <div class="coming-badge" style="margin-bottom:12px;"><div class="coming-dot"></div>In Development</div>
-          <div style="font-size:19px;font-weight:700;color:var(--t1);letter-spacing:-.3px;margin-bottom:6px;">Next App</div>
-          <p class="body-text">We're already working on our next product. Like BillKadai, it will be offline-first, free to download, and built for the real needs of small businesses.</p>
+
+    <!-- Section header -->
+    <div class="reveal" style="display:flex;align-items:flex-start;gap:48px;flex-wrap:wrap;margin-bottom:52px;">
+      <div style="flex:1;min-width:260px;">
+        <div class="eyebrow" style="margin-bottom:16px;">
+          <img src="taleme-icon.png" style="width:20px;height:20px;border-radius:5px;object-fit:cover;">
+          Our Second App
         </div>
-        <div class="next-specs" style="display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
-          <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 16px;font-size:13px;color:var(--t2);">Offline first &nbsp; <span style="color:var(--green);">✓</span></div>
-          <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 16px;font-size:13px;color:var(--t2);">Free to download &nbsp; <span style="color:var(--green);">✓</span></div>
-          <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 16px;font-size:13px;color:var(--t2);">Built for small businesses &nbsp; <span style="color:var(--green);">✓</span></div>
+        <h2 class="title" style="margin-bottom:14px;">Meet TaleMe</h2>
+        <p class="subtitle" style="margin-bottom:20px;">TaleMe is an AI-powered interactive story app where your child is the hero. Every story is unique, personalized, and generated live by Claude AI.</p>
+        <p class="body-text" style="margin-bottom:20px;">We built it because bedtime stories should never be boring. Kids pick their name, age, and favorite theme — TaleMe generates a branching adventure where every choice shapes the story.</p>
+        <p class="body-text">Free to start. Premium unlocks unlimited stories, AI illustrations, and PDF export. No ads — ever.</p>
+      </div>
+      <div style="flex:0 0 auto;display:flex;flex-direction:column;gap:10px;min-width:220px;">
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 20px;">
+          <div class="small-text" style="margin-bottom:6px;">Platform</div>
+          <div style="font-size:14px;font-weight:600;color:var(--t1);">Android (Google Play)</div>
+        </div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 20px;">
+          <div class="small-text" style="margin-bottom:6px;">Pricing</div>
+          <div style="font-size:14px;font-weight:600;color:var(--t1);">Free · <span style="color:var(--brand);">Premium available</span></div>
+        </div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 20px;">
+          <div class="small-text" style="margin-bottom:6px;">Powered by</div>
+          <div style="font-size:14px;font-weight:600;color:var(--t1);">Claude AI (Anthropic)</div>
+        </div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 20px;">
+          <div class="small-text" style="margin-bottom:6px;">For</div>
+          <div style="font-size:14px;font-weight:600;color:var(--t1);">Children &amp; Families</div>
         </div>
       </div>
     </div>
+
+    <!-- TaleMe product card + features side by side -->
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;" id="taleme-grid">
+      <!-- Product card -->
+      <div class="product-card">
+        <div class="product-card-header">
+          <div class="product-icon-wrap">
+            <img src="taleme-icon.png" alt="TaleMe">
+          </div>
+          <div>
+            <div class="product-name">TaleMe</div>
+            <div class="product-category" style="background:var(--blue-bg);border-color:rgba(59,91,219,.18);color:var(--blue);">AI Stories · Children</div>
+          </div>
+          <div style="margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+            <span style="font-size:11px;font-weight:600;color:var(--t3);">FREEMIUM</span>
+            <div style="display:flex;gap:1px;">
+              <span style="color:var(--blue);font-size:12px;">★★★★★</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="product-desc">
+          The most magical bedtime story app for kids. Your child picks their name, age, and theme — Claude AI crafts a unique branching adventure just for them, every single night.
+        </p>
+
+        <ul class="feature-list">
+          <li>Your child is the hero of every story</li>
+          <li>Branching choices — kids shape the plot</li>
+          <li>AI illustrations on every chapter (Premium)</li>
+          <li>Offline reading — last 5 stories saved</li>
+          <li>Child-safe design, parent controls</li>
+          <li>No ads — subscription only</li>
+        </ul>
+
+        <div class="product-cta">
+          <div class="coming-badge"><div class="coming-dot"></div>Coming Soon</div>
+          <span class="product-cta-note">Notify me when it launches</span>
+        </div>
+      </div>
+
+      <!-- Free vs Premium table -->
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="font-size:13px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Free vs Premium</div>
+
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+          <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:13.5px;color:var(--t1);font-weight:500;">Stories / month</span>
+            <div style="display:flex;gap:28px;">
+              <span style="font-size:12px;color:var(--t3);font-weight:600;">FREE&nbsp; 3</span>
+              <span style="font-size:12px;color:var(--brand);font-weight:600;">PRO&nbsp; ∞</span>
+            </div>
+          </div>
+          <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:13.5px;color:var(--t1);font-weight:500;">AI Illustrations</span>
+            <div style="display:flex;gap:28px;">
+              <span style="font-size:13px;color:var(--t4);">—</span>
+              <span style="font-size:13px;color:var(--green);font-weight:600;">✓</span>
+            </div>
+          </div>
+          <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:13.5px;color:var(--t1);font-weight:500;">PDF Export</span>
+            <div style="display:flex;gap:28px;">
+              <span style="font-size:13px;color:var(--t4);">—</span>
+              <span style="font-size:13px;color:var(--green);font-weight:600;">✓</span>
+            </div>
+          </div>
+          <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:13.5px;color:var(--t1);font-weight:500;">Offline Reading</span>
+            <div style="display:flex;gap:28px;">
+              <span style="font-size:13px;color:var(--green);font-weight:600;">✓</span>
+              <span style="font-size:13px;color:var(--green);font-weight:600;">✓</span>
+            </div>
+          </div>
+          <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:13.5px;color:var(--t1);font-weight:500;">Branching Stories</span>
+            <div style="display:flex;gap:28px;">
+              <span style="font-size:13px;color:var(--green);font-weight:600;">✓</span>
+              <span style="font-size:13px;color:var(--green);font-weight:600;">✓</span>
+            </div>
+          </div>
+          <div style="padding:14px 18px;display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:13.5px;color:var(--t1);font-weight:500;">No Ads</span>
+            <div style="display:flex;gap:28px;">
+              <span style="font-size:13px;color:var(--green);font-weight:600;">✓</span>
+              <span style="font-size:13px;color:var(--green);font-weight:600;">✓</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--blue-bg);border:1px solid rgba(59,91,219,.18);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:10px;">
+          <div style="width:7px;height:7px;background:var(--blue);border-radius:50%;flex-shrink:0;"></div>
+          <span style="font-size:13px;color:var(--t2);">Premium uses <strong style="color:var(--t1);">Claude Sonnet</strong> for richer, more detailed stories</span>
+        </div>
+
+        <!-- How it works for TaleMe -->
+        <div style="margin-top:8px;">
+          <div style="font-size:13px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">How It Works</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <div style="width:28px;height:28px;flex-shrink:0;background:var(--blue-bg);border:1px solid rgba(59,91,219,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--blue);">1</div>
+              <div><div style="font-size:14px;font-weight:600;color:var(--t1);">Set up your child</div><div style="font-size:12.5px;color:var(--t3);margin-top:2px;">Enter name, age, and favorite story theme</div></div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <div style="width:28px;height:28px;flex-shrink:0;background:var(--blue-bg);border:1px solid rgba(59,91,219,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--blue);">2</div>
+              <div><div style="font-size:14px;font-weight:600;color:var(--t1);">AI writes the adventure</div><div style="font-size:12.5px;color:var(--t3);margin-top:2px;">Claude creates a unique story starring your child</div></div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <div style="width:28px;height:28px;flex-shrink:0;background:var(--blue-bg);border:1px solid rgba(59,91,219,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--blue);">3</div>
+              <div><div style="font-size:14px;font-weight:600;color:var(--t1);">Kids choose what happens</div><div style="font-size:12.5px;color:var(--t3);margin-top:2px;">Branching choices make every story different</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -1572,6 +1707,7 @@
     <p class="footer-copy">© 2026 Nowhere Origin. Built for small businesses worldwide.</p>
     <div class="footer-links">
       <a href="#product"    class="nav-link" style="font-size:13px;">BillKadai</a>
+      <a href="#taleme"     class="nav-link" style="font-size:13px;">TaleMe</a>
       <a href="#features"   class="nav-link" style="font-size:13px;">Features</a>
       <a href="#about"      class="nav-link" style="font-size:13px;">About</a>
       <a href="#contact"    class="nav-link" style="font-size:13px;">Contact</a>
@@ -1763,7 +1899,7 @@
       var items = entry.target.querySelectorAll('.stat-item');
       items.forEach(function(item){ item.classList.add('popped'); });
       var ns = entry.target.querySelectorAll('.stat-n');
-      if(ns[0]) countUp(ns[0], 1, 0,   600);
+      if(ns[0]) countUp(ns[0], 2, 0,   600);
       if(ns[1]) countUp(ns[1], 5, 90,  700);
       statsObs.unobserve(entry.target);
     });
