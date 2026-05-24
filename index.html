@@ -1,0 +1,1943 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Nowhere Origin — Building simple, powerful apps for small businesses worldwide. Our first product, BillKadai, is a free offline billing app for every shop." />
+  <title>Nowhere Origin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+  /* ═══════════════════════════════════════
+     DESIGN TOKENS — light / dark
+  ═══════════════════════════════════════ */
+  :root {
+    /* light */
+    --bg:        #f8f8f6;
+    --bg2:       #f0f0ec;
+    --surface:   #ffffff;
+    --surface2:  #fafaf8;
+    --border:    rgba(0,0,0,0.08);
+    --border-s:  rgba(0,0,0,0.14);
+    --t1:        #111111;
+    --t2:        #4a4a4a;
+    --t3:        #9a9a9a;
+    --t4:        #c2c2c2;
+    --brand:     #b86b00;          /* orange — legible on light */
+    --brand-bg:  rgba(184,107,0,0.07);
+    --brand-bd:  rgba(184,107,0,0.18);
+    --blue:      #3b5bdb;
+    --blue-bg:   rgba(59,91,219,0.07);
+    --green:     #1a7f4b;
+    --shadow-s:  0 1px 2px rgba(0,0,0,.05), 0 2px 8px rgba(0,0,0,.04);
+    --shadow:    0 2px 12px rgba(0,0,0,.06), 0 8px 28px rgba(0,0,0,.05);
+    --shadow-l:  0 8px 40px rgba(0,0,0,.09), 0 24px 64px rgba(0,0,0,.06);
+    --inv-bg:    #111111;
+    --inv-t:     #ffffff;
+    --cta-sep:   rgba(255,255,255,0.18);
+  }
+  [data-theme="dark"] {
+    --bg:        #0a0a0a;
+    --bg2:       #0f0f0f;
+    --surface:   #141414;
+    --surface2:  #111111;
+    --border:    rgba(255,255,255,0.07);
+    --border-s:  rgba(255,255,255,0.13);
+    --t1:        #f5f5f3;
+    --t2:        #9a9a9a;
+    --t3:        #555555;
+    --t4:        #333333;
+    --brand:     #f0a020;          /* orange — legible on dark */
+    --brand-bg:  rgba(240,160,32,0.09);
+    --brand-bd:  rgba(240,160,32,0.20);
+    --blue:      #7ba7f5;
+    --blue-bg:   rgba(123,167,245,0.09);
+    --green:     #3ecf8e;
+    --shadow-s:  0 1px 2px rgba(0,0,0,.4);
+    --shadow:    0 2px 12px rgba(0,0,0,.35), 0 8px 28px rgba(0,0,0,.25);
+    --shadow-l:  0 8px 40px rgba(0,0,0,.5), 0 24px 64px rgba(0,0,0,.35);
+    --inv-bg:    #f5f5f3;
+    --inv-t:     #111111;
+    --cta-sep:   rgba(0,0,0,0.15);
+  }
+
+  /* ═══════════════════════════════════════
+     RESET & BASE
+  ═══════════════════════════════════════ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--t1);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* Smooth theme switching */
+  .switching, .switching * {
+    transition:
+      background-color .28s ease,
+      border-color .28s ease,
+      color .18s ease,
+      box-shadow .28s ease,
+      opacity .18s ease !important;
+  }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border-s); border-radius: 10px; }
+
+  /* ═══════════════════════════════════════
+     ANIMATIONS
+  ═══════════════════════════════════════ */
+  @keyframes fadeUp   { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeIn   { from{opacity:0} to{opacity:1} }
+  @keyframes modalIn  { from{opacity:0;transform:scale(.96)} to{opacity:1;transform:scale(1)} }
+  @keyframes blink    { 0%,100%{opacity:1} 50%{opacity:.25} }
+  @keyframes pulse-r  { 0%,100%{transform:scale(1);opacity:.6} 50%{transform:scale(1.5);opacity:0} }
+
+  .a1{animation:fadeUp .6s cubic-bezier(.16,1,.3,1) .00s both}
+  .a2{animation:fadeUp .6s cubic-bezier(.16,1,.3,1) .10s both}
+  .a3{animation:fadeUp .6s cubic-bezier(.16,1,.3,1) .20s both}
+  .a4{animation:fadeUp .6s cubic-bezier(.16,1,.3,1) .30s both}
+  .a5{animation:fadeUp .6s cubic-bezier(.16,1,.3,1) .40s both}
+  .a6{animation:fadeUp .6s cubic-bezier(.16,1,.3,1) .50s both}
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity .65s cubic-bezier(.16,1,.3,1), transform .65s cubic-bezier(.16,1,.3,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ═══════════════════════════════════════
+     TYPOGRAPHY
+  ═══════════════════════════════════════ */
+  .eyebrow {
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--t3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .eyebrow-dot {
+    width: 5px; height: 5px;
+    background: var(--brand);
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: blink 2.5s ease-in-out infinite;
+  }
+
+  .display {
+    font-size: clamp(42px, 5.5vw, 72px);
+    font-weight: 800;
+    line-height: 1.04;
+    letter-spacing: -2.5px;
+    color: var(--t1);
+  }
+  .title {
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    color: var(--t1);
+  }
+  .subtitle { font-size: 17px; color: var(--t2); line-height: 1.75; }
+  .body-text { font-size: 15px; color: var(--t2); line-height: 1.65; }
+  .small-text { font-size: 13px; color: var(--t3); line-height: 1.5; }
+
+  /* ═══════════════════════════════════════
+     NAV
+  ═══════════════════════════════════════ */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px;
+    background: rgba(0,0,0,0);  /* set by theme */
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+  }
+  [data-theme="light"] .nav { background: rgba(248,248,246,.88); }
+  [data-theme="dark"]  .nav { background: rgba(10,10,10,.85); }
+
+  .nav-brand { display: flex; align-items: center; gap: 9px; text-decoration: none; }
+  .nav-brand-icon {
+    display: inline-block;
+    height: 42px; width: 42px;
+    border-radius: 11px;
+    flex-shrink: 0;
+    background: #0c1228 url('logo-icon.png') center / 210% auto no-repeat;
+    border: 1px solid rgba(100,149,237,0.22);
+    box-shadow: 0 0 0 1px rgba(100,149,237,0.06), 0 2px 8px rgba(0,0,0,0.18);
+  }
+  .nav-brand-name { font-size: 15px; font-weight: 700; color: var(--t1); letter-spacing: -.2px; }
+
+  .nav-links { display: flex; align-items: center; gap: 2px; }
+  .nav-link {
+    color: var(--t2); text-decoration: none;
+    font-size: 13.5px; font-weight: 500;
+    padding: 5px 12px; border-radius: 7px;
+    transition: color .15s, background .15s;
+  }
+  .nav-link:hover { color: var(--t1); background: var(--bg2); }
+
+  .nav-right { display: flex; align-items: center; gap: 8px; }
+
+  /* Theme toggle — pill switch */
+  .theme-toggle {
+    background: none; border: none; cursor: pointer; padding: 0;
+    display: flex; align-items: center; gap: 6px;
+    color: var(--t3); font-size: 11px; font-weight: 500;
+  }
+  .tt-label { letter-spacing: .3px; }
+  .tt-track {
+    width: 40px; height: 22px;
+    background: var(--bg2);
+    border: 1px solid var(--border-s);
+    border-radius: 100px;
+    padding: 2px;
+    display: flex; align-items: center;
+    transition: background .25s, border-color .25s;
+    flex-shrink: 0;
+  }
+  [data-theme="dark"] .tt-track {
+    background: var(--brand-bg);
+    border-color: var(--brand-bd);
+  }
+  .tt-thumb {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--t3);
+    transition: transform .25s cubic-bezier(.16,1,.3,1), background .25s;
+    flex-shrink: 0;
+  }
+  [data-theme="dark"] .tt-thumb {
+    transform: translateX(18px);
+    background: var(--brand);
+  }
+
+  /* Nav CTA */
+  .nav-cta {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--inv-bg); color: var(--inv-t);
+    font-size: 13px; font-weight: 600;
+    padding: 7px 16px; border-radius: 8px;
+    text-decoration: none;
+    transition: opacity .15s, transform .15s;
+    white-space: nowrap;
+  }
+  .nav-cta:hover { opacity: .85; transform: translateY(-1px); }
+
+  /* ═══════════════════════════════════════
+     HERO
+  ═══════════════════════════════════════ */
+  .hero-wrap {
+    min-height: 100svh;
+    display: flex; align-items: center;
+    padding: 80px 40px;
+  }
+  .hero-inner {
+    max-width: 1100px; margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: 1fr 480px;
+    gap: 72px; align-items: center;
+  }
+
+  /* Product Card — right side */
+  .product-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: var(--shadow);
+    transition: box-shadow .25s, border-color .25s, transform .3s cubic-bezier(.16,1,.3,1);
+  }
+  .product-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-l); border-color: var(--border-s); }
+
+  .product-card-header {
+    display: flex; align-items: center; gap: 14px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+  }
+  .product-icon-wrap {
+    width: 56px; height: 56px;
+    border-radius: 14px; overflow: hidden;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .product-icon-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .product-name { font-size: 18px; font-weight: 700; color: var(--t1); letter-spacing: -.3px; }
+  .product-category {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--brand-bg); border: 1px solid var(--brand-bd);
+    color: var(--brand); font-size: 11px; font-weight: 600;
+    padding: 3px 9px; border-radius: 20px;
+    text-transform: uppercase; letter-spacing: .5px;
+    margin-top: 4px;
+  }
+  .product-desc { font-size: 14px; color: var(--t2); line-height: 1.65; margin-bottom: 18px; }
+
+  .feature-list { list-style: none; margin-bottom: 22px; }
+  .feature-list li {
+    display: flex; align-items: center; gap: 9px;
+    font-size: 13.5px; color: var(--t2);
+    padding: 7px 0; border-bottom: 1px solid var(--border);
+  }
+  .feature-list li:last-child { border-bottom: none; }
+  .feature-list li::before {
+    content: '';
+    width: 5px; height: 5px;
+    background: var(--brand); border-radius: 50%; flex-shrink: 0;
+  }
+
+  .product-cta {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap;
+    padding-top: 18px; border-top: 1px solid var(--border);
+  }
+  .product-cta-note { font-size: 11.5px; color: var(--t3); }
+
+  /* ═══════════════════════════════════════
+     BUTTONS
+  ═══════════════════════════════════════ */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 600;
+    padding: 10px 20px; border-radius: 10px;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: opacity .15s, transform .2s, box-shadow .2s;
+    white-space: nowrap;
+  }
+  .btn-brand {
+    background: var(--brand); color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,.12);
+  }
+  .btn-brand:hover { opacity: .88; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,.16); }
+
+  .btn-outline {
+    background: transparent; color: var(--t2);
+    border: 1px solid var(--border-s);
+  }
+  .btn-outline:hover { color: var(--t1); border-color: var(--border-s); background: var(--bg2); }
+
+  .btn-solid {
+    background: var(--inv-bg); color: var(--inv-t);
+  }
+  .btn-solid:hover { opacity: .85; transform: translateY(-1px); }
+
+  .btn-sm { font-size: 13px; padding: 8px 16px; border-radius: 8px; }
+
+  /* ═══════════════════════════════════════
+     STATS STRIP
+  ═══════════════════════════════════════ */
+  .stats-strip {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    padding: 40px 40px;
+  }
+  .stats-inner { max-width: 860px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .stat-item { text-align: center; }
+  .stat-n { font-size: 44px; font-weight: 800; letter-spacing: -2px; color: var(--brand); line-height: 1; }
+  .stat-l { font-size: 12px; color: var(--t3); margin-top: 8px; text-transform: uppercase; letter-spacing: 1px; font-weight: 500; }
+
+  /* ═══════════════════════════════════════
+     SECTION CHROME
+  ═══════════════════════════════════════ */
+  .section { padding: 88px 40px; }
+  .section-inner { max-width: 1080px; margin: 0 auto; }
+  .section-alt { background: var(--surface); }
+  .section-header { margin-bottom: 52px; max-width: 600px; }
+  .section-header.center { text-align: center; margin-left: auto; margin-right: auto; }
+  .section-header .title { margin-bottom: 12px; }
+  .section-header .subtitle { max-width: 480px; }
+  .section-header.center .subtitle { margin: 0 auto; }
+
+  /* ═══════════════════════════════════════
+     FEATURE GRID
+  ═══════════════════════════════════════ */
+  .feat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+  .feat-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 24px;
+    transition: border-color .2s, box-shadow .2s, transform .25s cubic-bezier(.16,1,.3,1);
+  }
+  .feat-card:hover { border-color: var(--border-s); transform: translateY(-2px); box-shadow: var(--shadow); }
+  .feat-ico {
+    width: 40px; height: 40px;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; margin-bottom: 16px;
+  }
+  .feat-ico.brand { background: var(--brand-bg); border-color: var(--brand-bd); }
+  .feat-ico.blue  { background: var(--blue-bg); border-color: rgba(59,91,219,.18); }
+  .feat-name { font-size: 15px; font-weight: 600; color: var(--t1); letter-spacing: -.2px; margin-bottom: 6px; }
+  .feat-desc { font-size: 13.5px; color: var(--t2); line-height: 1.6; }
+
+  /* ═══════════════════════════════════════
+     HOW IT WORKS
+  ═══════════════════════════════════════ */
+  .steps-wrap { display: flex; flex-direction: column; gap: 0; max-width: 600px; margin: 0 auto; }
+  .step-row { display: flex; gap: 24px; align-items: flex-start; }
+  .step-aside { display: flex; flex-direction: column; align-items: center; }
+  .step-num {
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: var(--brand-bg); border: 1px solid var(--brand-bd);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; color: var(--brand);
+  }
+  .step-line { width: 1px; flex: 1; min-height: 40px; background: var(--border); margin: 6px 0; }
+  .step-body { padding-top: 5px; padding-bottom: 36px; }
+  .step-title { font-size: 17px; font-weight: 600; color: var(--t1); letter-spacing: -.2px; margin-bottom: 6px; }
+  .step-desc { font-size: 14px; color: var(--t2); line-height: 1.65; }
+
+  /* ═══════════════════════════════════════
+     LANGUAGE CARDS
+  ═══════════════════════════════════════ */
+  .lang-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; }
+  .lang-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px;
+    display: flex; align-items: center; gap: 10px;
+    transition: border-color .2s, box-shadow .2s;
+    cursor: default;
+  }
+  .lang-card:hover { border-color: var(--border-s); box-shadow: var(--shadow-s); }
+  .lang-name { font-size: 14px; font-weight: 600; color: var(--t1); }
+  .lang-native { font-size: 11.5px; color: var(--t3); }
+
+  /* ═══════════════════════════════════════
+     WHO IT'S FOR
+  ═══════════════════════════════════════ */
+  .who-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+  .who-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px 20px;
+    display: flex; align-items: center; gap: 12px;
+    transition: border-color .2s; cursor: default;
+  }
+  .who-card:hover { border-color: var(--border-s); }
+  .who-icon { font-size: 24px; flex-shrink: 0; }
+  .who-name { font-size: 14px; font-weight: 600; color: var(--t1); }
+  .who-sub  { font-size: 12px; color: var(--t3); margin-top: 1px; }
+
+  /* ═══════════════════════════════════════
+     COMING SOON
+  ═══════════════════════════════════════ */
+  .next-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: 28px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 32px; flex-wrap: wrap;
+    transition: border-color .2s;
+  }
+  .next-card:hover { border-color: var(--border-s); }
+  .coming-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--blue-bg); border: 1px solid rgba(59,91,219,.18);
+    color: var(--blue);
+    font-size: 11px; font-weight: 600;
+    padding: 4px 10px; border-radius: 20px;
+    text-transform: uppercase; letter-spacing: .5px;
+  }
+  .coming-dot {
+    width: 5px; height: 5px; background: var(--blue);
+    border-radius: 50%;
+    animation: blink 1.8s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  /* ═══════════════════════════════════════
+     ABOUT VALUES
+  ═══════════════════════════════════════ */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .vals-grid  { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .val-card {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px;
+    transition: border-color .2s;
+  }
+  .val-card:hover { border-color: var(--border-s); }
+  .val-icon { font-size: 22px; margin-bottom: 10px; }
+  .val-name { font-size: 14px; font-weight: 600; color: var(--t1); margin-bottom: 4px; }
+  .val-desc { font-size: 12.5px; color: var(--t3); line-height: 1.55; }
+
+  /* ═══════════════════════════════════════
+     DOWNLOAD CTA SECTION
+  ═══════════════════════════════════════ */
+  .cta-section {
+    background: var(--inv-bg);
+    padding: 88px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 0%, rgba(240,160,32,.12), transparent);
+    pointer-events: none;
+  }
+  [data-theme="light"] .cta-section::before {
+    background: radial-gradient(ellipse 60% 60% at 50% 0%, rgba(184,107,0,.10), transparent);
+  }
+  .cta-title {
+    font-size: clamp(32px,4.5vw,56px);
+    font-weight: 800; letter-spacing: -2px;
+    color: var(--inv-t);
+    line-height: 1.06; margin-bottom: 14px;
+  }
+  .cta-sub { font-size: 16px; color: rgba(0,0,0,.45); line-height: 1.7; margin-bottom: 40px; }
+  [data-theme="light"] .cta-sub { color: rgba(255,255,255,.6); }
+  .cta-checks { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 22px; }
+  .cta-check { font-size: 12.5px; color: rgba(0,0,0,.35); display: flex; align-items: center; gap: 5px; }
+  [data-theme="light"] .cta-check { color: rgba(255,255,255,.5); }
+  .cta-check-mark { color: var(--green); font-size: 13px; }
+
+  /* large play-store button in CTA section */
+  .btn-play-big {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: var(--brand); color: #fff;
+    font-size: 15px; font-weight: 700;
+    padding: 14px 28px; border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,.25);
+    transition: opacity .15s, transform .2s, box-shadow .2s;
+  }
+  .btn-play-big:hover { opacity: .9; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,.35); }
+
+  /* ═══════════════════════════════════════
+     CONTACT
+  ═══════════════════════════════════════ */
+  .contact-card {
+    display: inline-flex; align-items: center; gap: 14px;
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 16px 28px; border-radius: 14px;
+    transition: border-color .2s, box-shadow .2s, transform .2s;
+  }
+  .contact-card:hover { border-color: var(--border-s); box-shadow: var(--shadow); transform: translateY(-2px); }
+  .contact-email { color: var(--brand); text-decoration: none; font-size: 16px; font-weight: 600; }
+
+  /* ═══════════════════════════════════════
+     DRAWER PANEL (replaces modal)
+  ═══════════════════════════════════════ */
+  @keyframes drawerIn      { from{transform:translateX(100%)} to{transform:translateX(0)} }
+  @keyframes drawerOut     { from{transform:translateX(0)} to{transform:translateX(100%)} }
+  @keyframes backdropFade  { from{opacity:0} to{opacity:1} }
+
+  .modal-bg {
+    display: none;
+    position: fixed; inset: 0;
+    z-index: 500;
+    justify-content: flex-end;
+  }
+  .modal-bg.open  { display: flex; }
+  .modal-bg.closing .modal-backdrop { animation: backdropFade .22s ease reverse both; }
+  .modal-bg.closing .modal-box      { animation: drawerOut .28s cubic-bezier(.4,0,1,1) both; }
+
+  .modal-backdrop {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,.40);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    animation: backdropFade .22s ease both;
+    cursor: pointer;
+  }
+  [data-theme="light"] .modal-backdrop { background: rgba(0,0,0,.25); }
+
+  .modal-box {
+    position: relative; z-index: 1;
+    width: 100%; max-width: 460px; height: 100%;
+    background: var(--surface);
+    border-left: 1px solid var(--border-s);
+    display: flex; flex-direction: column;
+    box-shadow: -8px 0 40px rgba(0,0,0,.12);
+    animation: drawerIn .32s cubic-bezier(.16,1,.3,1);
+    will-change: transform;
+    overflow: hidden;
+  }
+  [data-theme="dark"] .modal-box { box-shadow: -8px 0 40px rgba(0,0,0,.45); }
+
+  /* Drawer header */
+  .modal-head {
+    flex-shrink: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 24px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .modal-close-btn {
+    margin-left: auto; flex-shrink: 0;
+    width: 30px; height: 30px; border-radius: 8px;
+    background: var(--bg2); border: 1px solid var(--border);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: var(--t2); padding: 0;
+    transition: color .15s, background .15s, border-color .15s;
+  }
+  .modal-close-btn:hover { color: var(--t1); border-color: var(--border-s); background: var(--bg); }
+
+  /* Drawer scrollable body */
+  .modal-body {
+    flex: 1; overflow-y: auto;
+    padding: 24px;
+    scroll-behavior: smooth;
+  }
+  .modal-body::-webkit-scrollbar { width: 3px; }
+  .modal-body::-webkit-scrollbar-track { background: transparent; }
+  .modal-body::-webkit-scrollbar-thumb { background: var(--border-s); border-radius: 10px; }
+
+  .modal-sec { margin-bottom: 28px; }
+  .modal-sec-title {
+    font-size: 11px; font-weight: 700;
+    color: var(--t3); text-transform: uppercase; letter-spacing: 1.2px;
+    margin-bottom: 14px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Feature rows — single column, clean list */
+  .modal-feat-list { display: flex; flex-direction: column; gap: 2px; }
+  .modal-feat {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 14px; border-radius: 10px;
+    transition: background .15s;
+    cursor: default;
+  }
+  .modal-feat:hover { background: var(--bg2); }
+  .modal-feat-icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    transition: background .15s, border-color .15s;
+  }
+  .modal-feat:hover .modal-feat-icon { background: var(--bg); border-color: var(--border-s); }
+  .modal-feat-title { font-size: 14px; font-weight: 600; color: var(--t1); }
+  .modal-feat-desc  { font-size: 12px; color: var(--t3); margin-top: 1px; line-height: 1.4; }
+
+  /* Drawer sticky footer */
+  .modal-footer {
+    flex-shrink: 0;
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  @media (max-width: 560px) {
+    .modal-box { max-width: 100%; border-left: none; border-top: 1px solid var(--border-s); }
+    .modal-bg { align-items: flex-end; }
+    @keyframes drawerIn  { from{transform:translateY(100%)} to{transform:translateY(0)} }
+    @keyframes drawerOut { from{transform:translateY(0)} to{transform:translateY(100%)} }
+  }
+
+  /* ═══════════════════════════════════════
+     FOOTER
+  ═══════════════════════════════════════ */
+  .footer {
+    border-top: 1px solid var(--border);
+    background: var(--bg2);
+    padding: 36px 40px;
+  }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 20px;
+  }
+  .footer-brand { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+  .footer-brand-name { font-size: 13.5px; font-weight: 700; color: var(--t1); }
+  .footer-brand-tag  { font-size: 11px; color: var(--t3); }
+  .footer-copy { font-size: 12.5px; color: var(--t3); }
+  .footer-links { display: flex; gap: 2px; }
+
+  /* Live pulse indicator */
+  .live-dot {
+    position: relative; width: 8px; height: 8px; flex-shrink: 0;
+  }
+  .live-dot-inner {
+    position: absolute; inset: 0;
+    background: var(--green); border-radius: 50%;
+  }
+  .live-dot-ring {
+    position: absolute; inset: -2px;
+    background: var(--green); border-radius: 50%; opacity: 0;
+    animation: pulse-r 2s ease-out infinite;
+  }
+
+  /* How-it-works grid base */
+  .how-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 72px;
+    align-items: start;
+  }
+
+  /* ═══════════════════════════════════════
+     RESPONSIVE — tablet  ≤960px
+  ═══════════════════════════════════════ */
+  @media (max-width: 960px) {
+    /* Nav */
+    .nav { padding: 0 18px; }
+    .nav-links { display: none; }
+    .tt-label { display: none; }           /* hide "Dark/Light" label, keep pill */
+
+    /* Hero */
+    .hero-wrap { padding: 72px 20px 52px; min-height: auto; }
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+    .hero-right { order: -1; }
+
+    /* Sections */
+    .section { padding: 60px 20px; }
+    .cta-section { padding: 64px 20px; }
+
+    /* Grids */
+    .about-grid  { grid-template-columns: 1fr; gap: 36px; }
+    .how-grid    { grid-template-columns: 1fr; gap: 36px; }
+    .feat-grid   { grid-template-columns: repeat(2,1fr); }
+    .lang-grid   { grid-template-columns: repeat(3,1fr); }
+    .who-grid    { grid-template-columns: repeat(2,1fr); }
+    .vals-grid   { grid-template-columns: repeat(2,1fr); }
+
+    /* Stats */
+    .stats-strip { padding: 36px 20px; }
+    .stats-inner { grid-template-columns: repeat(2,1fr); gap: 24px; }
+
+    /* Coming next */
+    .next-specs  { width: 100%; flex-shrink: unset; }
+
+    /* Footer */
+    .footer { padding: 28px 20px; }
+    .footer-inner {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+    }
+    .footer-links { justify-content: center; }
+  }
+
+  /* ═══════════════════════════════════════
+     RESPONSIVE — mobile  ≤560px
+  ═══════════════════════════════════════ */
+  @media (max-width: 560px) {
+    /* Typography */
+    .display { font-size: 34px; letter-spacing: -1.5px; }
+    .title   { font-size: 23px; letter-spacing: -0.8px; }
+    .subtitle { font-size: 15px; }
+
+    /* Nav CTA shorter */
+    .nav-cta { font-size: 12px; padding: 7px 13px; }
+
+    /* Hero */
+    .hero-wrap { padding: 76px 16px 44px; }
+
+    /* Sections */
+    .section     { padding: 48px 16px; }
+    .cta-section { padding: 52px 16px; }
+    .stats-strip { padding: 32px 16px; }
+
+    /* Stats */
+    .stat-n { font-size: 38px; }
+    .stats-inner { grid-template-columns: repeat(2,1fr); gap: 20px; }
+
+    /* Grids */
+    .feat-grid   { grid-template-columns: 1fr; }
+    .lang-grid   { grid-template-columns: repeat(2,1fr); }
+    .who-grid    { grid-template-columns: 1fr; }
+    .vals-grid   { grid-template-columns: 1fr; }
+
+    /* Product card */
+    .product-cta { flex-direction: column; align-items: stretch; }
+    .product-cta .btn { justify-content: center; }
+
+    /* CTA section */
+    .cta-title { font-size: 27px; letter-spacing: -1.2px; }
+    .cta-checks { gap: 12px; }
+
+    /* Coming next */
+    .next-card { flex-direction: column; }
+    .next-specs { width: 100%; }
+
+    /* Footer */
+    .footer-inner { flex-direction: column; align-items: center; text-align: center; gap: 14px; }
+    .footer-links { justify-content: center; flex-wrap: wrap; }
+
+    /* Section headers */
+    .section-header .subtitle { max-width: 100%; }
+
+    /* Video */
+    .video-wrap { border-radius: 10px; }
+  }
+
+  /* ═══════════════════════════════════════
+     RESPONSIVE — small mobile  ≤380px
+  ═══════════════════════════════════════ */
+  @media (max-width: 380px) {
+    .display { font-size: 30px; letter-spacing: -1.2px; }
+    .nav-brand-name { font-size: 13px; }
+    .nav-cta { padding: 7px 10px; font-size: 11px; }
+    .stat-n  { font-size: 32px; }
+  }
+
+  /* ═══════════════════════════════════════
+     PREMIUM VIDEO PLAYER
+  ═══════════════════════════════════════ */
+  @keyframes vidSpin { to { transform: rotate(360deg); } }
+  @keyframes vidRipple { to { transform: translate(-50%,-50%) scale(3); opacity: 0; } }
+  @keyframes vidFadeIn { from{opacity:0} to{opacity:1} }
+
+  .vp {
+    position: relative;
+    width: 100%; max-width: 860px;
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #000;
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--border-s);
+    box-shadow: var(--shadow-l);
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .vp video {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* Bottom gradient */
+  .vp-grad {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom,
+      transparent 40%,
+      rgba(0,0,0,.55) 80%,
+      rgba(0,0,0,.80) 100%);
+    opacity: 0;
+    transition: opacity .28s;
+    pointer-events: none;
+  }
+  .vp.paused .vp-grad,
+  .vp.show-ui .vp-grad { opacity: 1; }
+
+  /* Loading spinner */
+  .vp-spinner {
+    position: absolute; inset: 0;
+    display: none; align-items: center; justify-content: center;
+    pointer-events: none;
+  }
+  .vp.loading .vp-spinner { display: flex; }
+  .vp-spin-ring {
+    width: 40px; height: 40px;
+    border: 3px solid rgba(255,255,255,.2);
+    border-top-color: var(--brand);
+    border-radius: 50%;
+    animation: vidSpin .7s linear infinite;
+  }
+
+  /* Centre play/pause icon */
+  .vp-center {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+  }
+  .vp-center-btn {
+    width: 72px; height: 72px;
+    background: rgba(255,255,255,.92);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 28px rgba(0,0,0,.40);
+    transform: scale(.7); opacity: 0;
+    transition: transform .25s cubic-bezier(.16,1,.3,1), opacity .2s;
+  }
+  .vp.paused .vp-center-btn          { transform: scale(1); opacity: 1; }
+  .vp.show-ui:not(.paused) .vp-center-btn { transform: scale(1); opacity: .35; }
+
+  /* Click ripple */
+  .vp-ripple {
+    position: absolute;
+    width: 72px; height: 72px;
+    background: rgba(255,255,255,.18);
+    border-radius: 50%;
+    transform: translate(-50%,-50%) scale(0);
+    pointer-events: none;
+    animation: vidRipple .45s ease-out both;
+  }
+
+  /* Controls bar */
+  .vp-ctrl {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 10px 16px 14px;
+    opacity: 0; transform: translateY(6px);
+    transition: opacity .25s, transform .25s;
+    pointer-events: none;
+  }
+  .vp.paused .vp-ctrl,
+  .vp.show-ui .vp-ctrl {
+    opacity: 1; transform: translateY(0); pointer-events: all;
+  }
+
+  /* Progress bar */
+  .vp-prog-wrap {
+    height: 22px;
+    display: flex; align-items: flex-end;
+    margin-bottom: 6px;
+    cursor: pointer;
+  }
+  .vp-prog-track {
+    width: 100%; height: 3px;
+    background: rgba(255,255,255,.25);
+    border-radius: 3px;
+    position: relative;
+    transition: height .15s ease;
+  }
+  .vp-prog-wrap:hover .vp-prog-track { height: 5px; }
+  .vp-buf {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    background: rgba(255,255,255,.3);
+    border-radius: 3px; pointer-events: none;
+    transition: width .3s linear;
+  }
+  .vp-played {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    background: var(--brand);
+    border-radius: 3px; pointer-events: none;
+  }
+  .vp-thumb {
+    position: absolute; top: 50%;
+    width: 13px; height: 13px;
+    background: #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    box-shadow: 0 1px 6px rgba(0,0,0,.4);
+    pointer-events: none;
+    transition: transform .15s;
+  }
+  .vp-prog-wrap:hover .vp-thumb { transform: translate(-50%, -50%) scale(1); }
+
+  /* Controls bottom row */
+  .vp-bar {
+    display: flex; align-items: center; gap: 6px;
+  }
+  .vp-btn {
+    background: none; border: none; padding: 5px;
+    color: rgba(255,255,255,.85);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px;
+    flex-shrink: 0;
+    transition: color .15s, background .15s, transform .15s;
+  }
+  .vp-btn:hover { color: #fff; background: rgba(255,255,255,.12); transform: scale(1.1); }
+  .vp-btn:active { transform: scale(.95); }
+
+  .vp-time {
+    font-size: 11.5px; font-weight: 500;
+    color: rgba(255,255,255,.75);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap; letter-spacing: .2px;
+  }
+
+  /* Volume */
+  .vp-vol-row {
+    display: flex; align-items: center; gap: 4px;
+    overflow: hidden;
+    max-width: 0;
+    transition: max-width .25s ease, opacity .25s;
+    opacity: 0;
+  }
+  .vp-vol-group:hover .vp-vol-row,
+  .vp-vol-row:hover {
+    max-width: 80px;
+    opacity: 1;
+  }
+  .vp-vol-group { display: flex; align-items: center; }
+  .vp-vol {
+    width: 64px; height: 4px;
+    accent-color: var(--brand);
+    cursor: pointer;
+    appearance: auto;
+  }
+
+  /* Fullscreen state icon swap */
+  .vp-fs-on  { display: none; }
+  .vp-fs-off { display: block; }
+  .vp.fullscreen .vp-fs-on  { display: block; }
+  .vp.fullscreen .vp-fs-off { display: none; }
+
+  /* Mobile: small adjustments */
+  @media (max-width: 560px) {
+    .vp { border-radius: 10px; }
+    .vp-vol-row { display: none; }
+    .vp-center-btn { width: 56px; height: 56px; }
+  }
+
+  /* ═══════════════════════════════════════
+     PROFESSIONAL ANIMATIONS
+  ═══════════════════════════════════════ */
+
+  /* Nav shadow when scrolled */
+  .nav.scrolled {
+    box-shadow: 0 1px 0 var(--border), 0 8px 32px rgba(0,0,0,.06);
+  }
+  [data-theme="dark"] .nav.scrolled {
+    box-shadow: 0 1px 0 var(--border), 0 8px 32px rgba(0,0,0,.40);
+  }
+
+  /* Staggered children reveal */
+  .stagger > * {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity .52s cubic-bezier(.16,1,.3,1),
+                transform .52s cubic-bezier(.16,1,.3,1);
+  }
+  .stagger.visible > * { opacity: 1; transform: none; }
+  .stagger.visible > *:nth-child(1)  { transition-delay: .00s; }
+  .stagger.visible > *:nth-child(2)  { transition-delay: .07s; }
+  .stagger.visible > *:nth-child(3)  { transition-delay: .14s; }
+  .stagger.visible > *:nth-child(4)  { transition-delay: .21s; }
+  .stagger.visible > *:nth-child(5)  { transition-delay: .28s; }
+  .stagger.visible > *:nth-child(6)  { transition-delay: .35s; }
+  .stagger.visible > *:nth-child(7)  { transition-delay: .42s; }
+  .stagger.visible > *:nth-child(8)  { transition-delay: .49s; }
+  .stagger.visible > *:nth-child(9)  { transition-delay: .56s; }
+
+  /* Product card shimmer sweep on hover */
+  .product-card { position: relative; overflow: hidden; }
+  .product-card::after {
+    content: '';
+    position: absolute; top: 0; left: -100%;
+    width: 55%; height: 100%;
+    background: linear-gradient(105deg,
+      transparent 35%,
+      rgba(255,255,255,.05) 50%,
+      transparent 65%);
+    transition: left .65s ease;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+  [data-theme="light"] .product-card::after {
+    background: linear-gradient(105deg,
+      transparent 35%,
+      rgba(255,255,255,.55) 50%,
+      transparent 65%);
+  }
+  .product-card:hover::after { left: 150%; }
+
+  /* Button press feedback */
+  .btn:active          { transform: scale(0.97) !important; transition-duration: .1s !important; }
+  .btn-play-big:active { transform: scale(0.97) !important; transition-duration: .1s !important; }
+  .nav-cta:active      { opacity: .75; }
+
+  /* CTA background glow pulse */
+  @keyframes ctaGlow {
+    0%,100% { transform: translate(-50%,-50%) scale(1);    opacity: .6; }
+    50%     { transform: translate(-50%,-50%) scale(1.25); opacity: 1;  }
+  }
+  .cta-section::before { animation: ctaGlow 5s ease-in-out infinite; }
+
+  /* Feature icon micro-interaction */
+  .feat-ico { transition: transform .2s cubic-bezier(.16,1,.3,1), background .2s; }
+  .feat-card:hover .feat-ico { transform: scale(1.14); }
+
+  /* Step number hover swell */
+  .step-num {
+    transition: transform .2s cubic-bezier(.16,1,.3,1),
+                background .2s, border-color .2s;
+  }
+  .step-row:hover .step-num {
+    transform: scale(1.1);
+    background: var(--brand-bg);
+    border-color: var(--brand-bd);
+  }
+
+  /* Card lift on hover */
+  .lang-card {
+    transition: border-color .2s,
+                transform .22s cubic-bezier(.16,1,.3,1),
+                box-shadow .22s;
+  }
+  .lang-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+
+  .who-card  { transition: border-color .2s, transform .22s cubic-bezier(.16,1,.3,1); }
+  .who-card:hover  { transform: translateY(-2px); }
+
+  .val-card  { transition: border-color .2s, transform .22s cubic-bezier(.16,1,.3,1); }
+  .val-card:hover  { transform: translateY(-2px); }
+
+  .next-card {
+    transition: border-color .2s,
+                transform .22s cubic-bezier(.16,1,.3,1),
+                box-shadow .22s;
+  }
+  .next-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+
+  /* Stat number pop-in animation */
+  @keyframes statPop {
+    from { opacity: 0; transform: translateY(10px) scale(.90); }
+    to   { opacity: 1; transform: none; }
+  }
+  .stat-item.popped .stat-n {
+    animation: statPop .5s cubic-bezier(.16,1,.3,1) both;
+  }
+  .stat-item:nth-child(2).popped .stat-n { animation-delay: .09s; }
+  .stat-item:nth-child(3).popped .stat-n { animation-delay: .18s; }
+  .stat-item:nth-child(4).popped .stat-n { animation-delay: .27s; }
+
+  /* Nav / footer brand link */
+  .nav-brand    { transition: opacity .15s; }
+  .nav-brand:hover  { opacity: .8; }
+  .footer-brand { transition: opacity .15s; }
+  .footer-brand:hover { opacity: .75; }
+
+  /* Modal backdrop fade-in */
+  @keyframes bdFadeIn { from{opacity:0} to{opacity:1} }
+  .modal-bg.open .modal-backdrop { animation: bdFadeIn .2s ease both; }
+
+  /* Feature card entrance uses stagger, enhance with slight scale */
+  .stagger.feat-grid > * {
+    transform: translateY(14px) scale(.98);
+  }
+  .stagger.feat-grid.visible > * { transform: none; }
+  </style>
+</head>
+
+<body>
+
+<!-- ═══════════════════ NAV ═══════════════════ -->
+<nav class="nav">
+  <a href="#" class="nav-brand">
+    <span class="nav-brand-icon" role="img" aria-label="Nowhere Origin logo"></span>
+    <span class="nav-brand-name">Nowhere Origin</span>
+  </a>
+
+  <div class="nav-links">
+    <a href="#product"    class="nav-link">BillKadai</a>
+    <a href="#features"   class="nav-link">Features</a>
+    <a href="#howitworks" class="nav-link">How it Works</a>
+    <a href="#about"      class="nav-link">About</a>
+    <a href="#contact"    class="nav-link">Contact</a>
+  </div>
+
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <span class="tt-label" id="tt-label">Dark</span>
+      <span class="tt-track">
+        <span class="tt-thumb"></span>
+      </span>
+    </button>
+    <a href="https://play.google.com/store/apps/details?id=com.billkadai.app" target="_blank" rel="noopener" class="nav-cta">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.37.21.79.24 1.18.07l13.98-8.07-3.03-3.03L3.18 23.76zM.29 1.52C.11 1.9.01 2.34.01 2.83v18.35c0 .49.1.93.28 1.31l.07.07L10.48 12.1v-.21L.36 1.45l-.07.07zm20.63 8.88L17.34 8.3l-3.37 3.37 3.37 3.37 3.6-2.09c1.03-.6 1.03-1.56-.02-2.15zM4.36.24C3.97.07 3.55.1 3.18.31L16.31 13.44l-3.03 3.03L4.36.24z"/></svg>
+      Get BillKadai
+    </a>
+  </div>
+</nav>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<div class="hero-wrap">
+  <div class="hero-inner">
+
+    <!-- Left: Company -->
+    <div class="hero-left">
+      <div class="eyebrow a1">
+        <div class="live-dot"><div class="live-dot-inner"></div><div class="live-dot-ring"></div></div>
+        Nowhere Origin &nbsp;·&nbsp; Independent Software Studio
+      </div>
+      <h1 class="display a2" style="margin-bottom:20px;">
+        Apps built for<br>small businesses.
+      </h1>
+      <p class="subtitle a3" style="max-width:440px;margin-bottom:36px;">
+        We design and build simple, offline-first tools for shop owners and small businesses worldwide. No complexity, no subscriptions — just software that works.
+      </p>
+      <div class="a4" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px;">
+        <a href="#product" class="btn btn-brand">
+          Explore BillKadai
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+        <a href="#about" class="btn btn-outline">About Us</a>
+      </div>
+      <p class="a5 small-text">1 app live &nbsp;·&nbsp; More in development &nbsp;·&nbsp; 100% free</p>
+    </div>
+
+    <!-- Right: BillKadai Product Card -->
+    <div class="hero-right a3">
+      <div class="product-card">
+        <div class="product-card-header">
+          <div class="product-icon-wrap">
+            <img src="billkadai-icon.png" alt="BillKadai">
+          </div>
+          <div>
+            <div class="product-name">BillKadai</div>
+            <div class="product-category">Billing & POS</div>
+          </div>
+          <div style="margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+            <span style="font-size:11px;font-weight:600;color:var(--t3);">FREE</span>
+            <div style="display:flex;gap:1px;">
+              <span style="color:var(--brand);font-size:12px;">★★★★★</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="product-desc">
+          The fastest offline billing app for tea shops, hotels, bakeries, and every small business. Replace your paper notebook with a smart digital billing system — no internet required.
+        </p>
+
+        <ul class="feature-list">
+          <li>Create bills in under 5 seconds</li>
+          <li>Works 100% offline — no internet needed</li>
+          <li>UPI QR code on every bill</li>
+          <li>GST inclusive & exclusive support</li>
+          <li>Daily, weekly, monthly sales reports</li>
+          <li>5 Indian languages supported</li>
+        </ul>
+
+        <div class="product-cta">
+          <a href="https://play.google.com/store/apps/details?id=com.billkadai.app" target="_blank" rel="noopener" class="btn btn-brand btn-sm">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.37.21.79.24 1.18.07l13.98-8.07-3.03-3.03L3.18 23.76zM.29 1.52C.11 1.9.01 2.34.01 2.83v18.35c0 .49.1.93.28 1.31l.07.07L10.48 12.1v-.21L.36 1.45l-.07.07zm20.63 8.88L17.34 8.3l-3.37 3.37 3.37 3.37 3.6-2.09c1.03-.6 1.03-1.56-.02-2.15zM4.36.24C3.97.07 3.55.1 3.18.31L16.31 13.44l-3.03 3.03L4.36.24z"/></svg>
+            Download on Play Store
+          </a>
+          <button class="btn btn-outline btn-sm" onclick="openModal()" style="cursor:pointer;">
+            See all features
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════ STATS ═══════════════════ -->
+<div class="stats-strip reveal">
+  <div class="stats-inner">
+    <div class="stat-item"><div class="stat-n">1</div><div class="stat-l">App Live</div></div>
+    <div class="stat-item"><div class="stat-n">5</div><div class="stat-l">Languages</div></div>
+    <div class="stat-item"><div class="stat-n">∞</div><div class="stat-l">Offline First</div></div>
+    <div class="stat-item"><div class="stat-n">₹0</div><div class="stat-l">Free Forever</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ PRODUCT INTRO ═══════════════════ -->
+<div id="product" class="section section-alt" style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="section-inner">
+    <div class="reveal" style="display:flex;align-items:flex-start;gap:48px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:260px;">
+        <div class="eyebrow" style="margin-bottom:16px;">
+          <img src="billkadai-icon.png" style="width:20px;height:20px;border-radius:5px;">
+          Our Product
+        </div>
+        <h2 class="title" style="margin-bottom:14px;">Meet BillKadai</h2>
+        <p class="subtitle" style="margin-bottom:20px;">BillKadai is Nowhere Origin's first product — a billing and POS app built specifically for small businesses across India.</p>
+        <p class="body-text" style="margin-bottom:20px;">We built it because shop owners shouldn't need expensive software, stable internet, or technical knowledge to run their business. BillKadai works offline, generates UPI QR codes, supports GST, and runs in 5 languages.</p>
+        <p class="body-text">It is completely free to download and use. No subscription. No hidden charges. Ever.</p>
+      </div>
+      <div style="flex:0 0 auto;display:flex;flex-direction:column;gap:10px;min-width:220px;">
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 20px;">
+          <div class="small-text" style="margin-bottom:6px;">Platform</div>
+          <div style="font-size:14px;font-weight:600;color:var(--t1);">Android (Google Play)</div>
+        </div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 20px;">
+          <div class="small-text" style="margin-bottom:6px;">Pricing</div>
+          <div style="font-size:14px;font-weight:600;color:var(--green);">Free · No subscription</div>
+        </div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 20px;">
+          <div class="small-text" style="margin-bottom:6px;">Works without</div>
+          <div style="font-size:14px;font-weight:600;color:var(--t1);">Internet · Wi-Fi · Mobile data</div>
+        </div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 20px;">
+          <div class="small-text" style="margin-bottom:6px;">Languages</div>
+          <div style="font-size:14px;font-weight:600;color:var(--t1);">EN · தமிழ் · हिन्दी · తెలుగు · ಕನ್ನಡ</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ VIDEO ═══════════════════ -->
+<div class="section" style="border-top:1px solid var(--border);">
+  <div class="section-inner">
+    <div class="section-header center reveal">
+      <div class="eyebrow" style="justify-content:center;"><div class="eyebrow-dot"></div>App Demo</div>
+      <h2 class="title">See BillKadai in action.</h2>
+      <p class="subtitle">Watch how shop owners create bills, accept UPI payments, and manage their business in minutes.</p>
+    </div>
+    <div class="reveal" style="transition-delay:.1s;">
+      <!-- Premium Video Player -->
+      <div class="vp paused" id="vp">
+        <video id="vpVid" preload="metadata" playsinline>
+          <source src="videodemo.mp4" type="video/mp4">
+        </video>
+
+        <div class="vp-grad"></div>
+        <div class="vp-spinner"><div class="vp-spin-ring"></div></div>
+
+        <!-- Centre button -->
+        <div class="vp-center">
+          <div class="vp-center-btn" id="vpCenterBtn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#111"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="vp-ctrl" id="vpCtrl">
+          <!-- Progress -->
+          <div class="vp-prog-wrap" id="vpProgWrap">
+            <div class="vp-prog-track">
+              <div class="vp-buf"    id="vpBuf"></div>
+              <div class="vp-played" id="vpPlayed"></div>
+              <div class="vp-thumb"  id="vpThumb"></div>
+            </div>
+          </div>
+          <!-- Bar -->
+          <div class="vp-bar">
+            <button class="vp-btn" id="vpPlayBtn" aria-label="Play">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <span class="vp-time" id="vpTime">0:00 / 0:00</span>
+            <div style="flex:1"></div>
+            <div class="vp-vol-group">
+              <button class="vp-btn" id="vpMuteBtn" aria-label="Mute">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+              </button>
+              <div class="vp-vol-row">
+                <input class="vp-vol" id="vpVol" type="range" min="0" max="1" step="0.05" value="1">
+              </div>
+            </div>
+            <button class="vp-btn" id="vpFsBtn" aria-label="Fullscreen">
+              <svg class="vp-fs-off" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+              <svg class="vp-fs-on"  width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ FEATURES ═══════════════════ -->
+<div id="features" class="section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="eyebrow"><div class="eyebrow-dot"></div>Features</div>
+      <h2 class="title">Everything your shop needs.</h2>
+      <p class="subtitle">From billing to sales reports — BillKadai handles the complete business flow, even without internet.</p>
+    </div>
+    <div class="feat-grid stagger">
+      <div class="feat-card">
+        <div class="feat-ico brand">⚡</div>
+        <div class="feat-name">Bill in 5 seconds</div>
+        <div class="feat-desc">Tap items, set quantity, generate bill. No typing, no delays. Designed for busy shops with high customer volume.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ico">📶</div>
+        <div class="feat-name">100% Offline</div>
+        <div class="feat-desc">No Wi-Fi or mobile data needed. Works during power cuts, in basements, in rural areas — wherever your shop is.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ico blue">💰</div>
+        <div class="feat-name">UPI QR Payments</div>
+        <div class="feat-desc">A UPI QR code is auto-generated on every bill. Customers scan and pay instantly with any UPI app — PhonePe, GPay, Paytm.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ico">🧾</div>
+        <div class="feat-name">GST Support</div>
+        <div class="feat-desc">Inclusive and exclusive GST calculation built in. Professional invoices with tax breakdown on every receipt.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ico brand">📊</div>
+        <div class="feat-name">Sales Reports</div>
+        <div class="feat-desc">Daily, weekly and monthly reports. Cash vs UPI breakdown, top items, and revenue summaries at a glance.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ico blue">☁️</div>
+        <div class="feat-name">Cloud Backup</div>
+        <div class="feat-desc">All your data is automatically backed up. Restore everything on a new phone in seconds — nothing is ever lost.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ico">👥</div>
+        <div class="feat-name">Staff Management</div>
+        <div class="feat-desc">Add multiple staff members with individual PIN access. Control what each person can see or do in the app.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ico">📤</div>
+        <div class="feat-name">Share Bills Instantly</div>
+        <div class="feat-desc">Send bills via WhatsApp, SMS, or any app with a single tap. Customers receive a clean digital receipt.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ico brand">🔒</div>
+        <div class="feat-name">Secure & Private</div>
+        <div class="feat-desc">Your business data stays on your device. No third-party access. PIN-protected with optional cloud backup.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ HOW IT WORKS ═══════════════════ -->
+<div id="howitworks" class="section section-alt" style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="section-inner">
+    <div class="how-grid reveal">
+      <div>
+        <div class="eyebrow"><div class="eyebrow-dot"></div>How It Works</div>
+        <h2 class="title" style="margin-bottom:14px;">Up and running<br>in 3 steps.</h2>
+        <p class="body-text">No training required. No technical knowledge needed. If you can use a phone, you can use BillKadai.</p>
+      </div>
+      <div class="steps-wrap">
+        <div class="step-row">
+          <div class="step-aside">
+            <div class="step-num">1</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-body">
+            <div class="step-title">Download BillKadai</div>
+            <div class="step-desc">Install for free from Google Play Store. No account required. Open the app and you're ready.</div>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-aside">
+            <div class="step-num">2</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-body">
+            <div class="step-title">Set up your shop & menu</div>
+            <div class="step-desc">Add your shop name, items, prices, and UPI ID. Takes about 5 minutes. Change anything anytime.</div>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-aside">
+            <div class="step-num">3</div>
+          </div>
+          <div class="step-body" style="padding-bottom:0;">
+            <div class="step-title">Start billing customers</div>
+            <div class="step-desc">Tap items → bill generated → share via WhatsApp. All in under 5 seconds. Works entirely offline.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ LANGUAGES ═══════════════════ -->
+<div class="section">
+  <div class="section-inner">
+    <div class="section-header center reveal">
+      <div class="eyebrow" style="justify-content:center;"><div class="eyebrow-dot"></div>Language Support</div>
+      <h2 class="title">Speaks your language.</h2>
+      <p class="subtitle">BillKadai is available in 5 Indian languages so every shop owner can use it comfortably in their native tongue.</p>
+    </div>
+    <div class="lang-grid stagger">
+      <div class="lang-card"><span style="font-size:22px;">🇬🇧</span><div><div class="lang-name">English</div><div class="lang-native">English</div></div></div>
+      <div class="lang-card"><span style="font-size:22px;">🇮🇳</span><div><div class="lang-name">Tamil</div><div class="lang-native">தமிழ்</div></div></div>
+      <div class="lang-card"><span style="font-size:22px;">🇮🇳</span><div><div class="lang-name">Hindi</div><div class="lang-native">हिन्दी</div></div></div>
+      <div class="lang-card"><span style="font-size:22px;">🇮🇳</span><div><div class="lang-name">Telugu</div><div class="lang-native">తెలుగు</div></div></div>
+      <div class="lang-card"><span style="font-size:22px;">🇮🇳</span><div><div class="lang-name">Kannada</div><div class="lang-native">ಕನ್ನಡ</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ WHO IT'S FOR ═══════════════════ -->
+<div class="section section-alt" style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="section-inner">
+    <div class="section-header center reveal">
+      <div class="eyebrow" style="justify-content:center;"><div class="eyebrow-dot"></div>Who It's For</div>
+      <h2 class="title">Built for every kind<br>of small business.</h2>
+    </div>
+    <div class="who-grid stagger">
+      <div class="who-card"><div class="who-icon">☕</div><div><div class="who-name">Tea Shops</div><div class="who-sub">Chai stalls & beverages</div></div></div>
+      <div class="who-card"><div class="who-icon">🍽️</div><div><div class="who-name">Hotels & Restaurants</div><div class="who-sub">Small & medium dining</div></div></div>
+      <div class="who-card"><div class="who-icon">🎂</div><div><div class="who-name">Bakeries</div><div class="who-sub">Sweet shops & bakeries</div></div></div>
+      <div class="who-card"><div class="who-icon">🍛</div><div><div class="who-name">Mess & Canteens</div><div class="who-sub">Daily food service</div></div></div>
+      <div class="who-card"><div class="who-icon">🛒</div><div><div class="who-name">Grocery Stores</div><div class="who-sub">Kirana & retail shops</div></div></div>
+      <div class="who-card"><div class="who-icon">🏨</div><div><div class="who-name">Lodges & Stays</div><div class="who-sub">Small guesthouses</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ COMING NEXT ═══════════════════ -->
+<div class="section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="eyebrow"><div class="eyebrow-dot"></div>What's Next</div>
+      <h2 class="title" style="margin-bottom:36px;">More products<br>in development.</h2>
+      <div class="next-card">
+        <div style="flex:1;min-width:200px;">
+          <div class="coming-badge" style="margin-bottom:12px;"><div class="coming-dot"></div>In Development</div>
+          <div style="font-size:19px;font-weight:700;color:var(--t1);letter-spacing:-.3px;margin-bottom:6px;">Next App</div>
+          <p class="body-text">We're already working on our next product. Like BillKadai, it will be offline-first, free to download, and built for the real needs of small businesses.</p>
+        </div>
+        <div class="next-specs" style="display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 16px;font-size:13px;color:var(--t2);">Offline first &nbsp; <span style="color:var(--green);">✓</span></div>
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 16px;font-size:13px;color:var(--t2);">Free to download &nbsp; <span style="color:var(--green);">✓</span></div>
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 16px;font-size:13px;color:var(--t2);">Built for small businesses &nbsp; <span style="color:var(--green);">✓</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ ABOUT ═══════════════════ -->
+<div id="about" class="section section-alt" style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="section-inner">
+    <div class="about-grid reveal">
+      <div>
+        <div class="eyebrow"><div class="eyebrow-dot"></div>About Nowhere Origin</div>
+        <h2 class="title" style="margin-bottom:16px;">A small team building<br>tools that matter.</h2>
+        <p class="subtitle" style="margin-bottom:14px;">We are an independent software studio. We don't build for investors or to raise funding — we build for the shop owner who needs something that just works.</p>
+        <p class="body-text" style="margin-bottom:14px;">Our name, Nowhere Origin, reflects where our products are built for — businesses in every corner of the world, not just big cities.</p>
+        <p class="body-text">Every product we release is offline-first, free to use, and designed to be simple enough for anyone to learn in minutes.</p>
+      </div>
+      <div class="vals-grid stagger">
+        <div class="val-card">
+          <div class="val-icon">⚡</div>
+          <div class="val-name">Speed First</div>
+          <div class="val-desc">No loading screens. No delays. Apps respond instantly, every time.</div>
+        </div>
+        <div class="val-card">
+          <div class="val-icon">📶</div>
+          <div class="val-name">Offline First</div>
+          <div class="val-desc">Everything works without internet. Reliable wherever your shop is.</div>
+        </div>
+        <div class="val-card">
+          <div class="val-icon">🌍</div>
+          <div class="val-name">For Everyone</div>
+          <div class="val-desc">Designed for any small business, anywhere in the world.</div>
+        </div>
+        <div class="val-card">
+          <div class="val-icon">₹</div>
+          <div class="val-name">Free Forever</div>
+          <div class="val-desc">No subscription. No hidden charges. No paywalls. Ever.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ DOWNLOAD CTA ═══════════════════ -->
+<div class="cta-section">
+  <div class="reveal" style="position:relative;z-index:1;max-width:600px;margin:0 auto;">
+    <div style="display:flex;justify-content:center;margin-bottom:20px;">
+      <img src="billkadai-icon.png" alt="BillKadai" style="width:60px;height:60px;border-radius:16px;border:1px solid rgba(255,255,255,.1);">
+    </div>
+    <h2 class="cta-title">Start billing smarter.<br>It's completely free.</h2>
+    <p class="cta-sub">Download BillKadai and go from setup to your first bill in under 5 minutes. No account, no credit card, no subscription.</p>
+    <a href="https://play.google.com/store/apps/details?id=com.billkadai.app" target="_blank" rel="noopener" class="btn-play-big">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.37.21.79.24 1.18.07l13.98-8.07-3.03-3.03L3.18 23.76zM.29 1.52C.11 1.9.01 2.34.01 2.83v18.35c0 .49.1.93.28 1.31l.07.07L10.48 12.1v-.21L.36 1.45l-.07.07zm20.63 8.88L17.34 8.3l-3.37 3.37 3.37 3.37 3.6-2.09c1.03-.6 1.03-1.56-.02-2.15zM4.36.24C3.97.07 3.55.1 3.18.31L16.31 13.44l-3.03 3.03L4.36.24z"/></svg>
+      Download Free on Google Play
+    </a>
+    <div class="cta-checks">
+      <span class="cta-check"><span class="cta-check-mark">✓</span> Free forever</span>
+      <span style="color:var(--cta-sep);">·</span>
+      <span class="cta-check"><span class="cta-check-mark">✓</span> No subscription</span>
+      <span style="color:var(--cta-sep);">·</span>
+      <span class="cta-check"><span class="cta-check-mark">✓</span> Works offline</span>
+      <span style="color:var(--cta-sep);">·</span>
+      <span class="cta-check"><span class="cta-check-mark">✓</span> 5 languages</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CONTACT ═══════════════════ -->
+<div id="contact" class="section" style="text-align:center;">
+  <div class="reveal" style="max-width:440px;margin:0 auto;">
+    <div class="eyebrow" style="justify-content:center;"><div class="eyebrow-dot"></div>Contact & Support</div>
+    <h2 class="title" style="margin-bottom:12px;">Get in touch.</h2>
+    <p class="body-text" style="margin-bottom:28px;">Have a question or need support for BillKadai? We typically respond within 24 hours.</p>
+    <div class="contact-card">
+      <span style="font-size:18px;">✉️</span>
+      <a href="mailto:nowhereorigin@gmail.com" class="contact-email">nowhereorigin@gmail.com</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <a href="#" class="footer-brand">
+      <img src="logo-icon.png" style="height:24px;width:24px;border-radius:6px;object-fit:contain;" alt="">
+      <div>
+        <div class="footer-brand-name">Nowhere Origin</div>
+        <div class="footer-brand-tag">Intelligence that works.</div>
+      </div>
+    </a>
+    <p class="footer-copy">© 2026 Nowhere Origin. Built for small businesses worldwide.</p>
+    <div class="footer-links">
+      <a href="#product"    class="nav-link" style="font-size:13px;">BillKadai</a>
+      <a href="#features"   class="nav-link" style="font-size:13px;">Features</a>
+      <a href="#about"      class="nav-link" style="font-size:13px;">About</a>
+      <a href="#contact"    class="nav-link" style="font-size:13px;">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════ FEATURE DRAWER ═══════════════════ -->
+<div id="modal" class="modal-bg">
+  <div class="modal-backdrop" onclick="closeModal()"></div>
+  <div class="modal-box">
+
+    <!-- Header -->
+    <div class="modal-head">
+      <img src="billkadai-icon.png" style="width:40px;height:40px;border-radius:10px;flex-shrink:0;object-fit:cover;" alt="BillKadai">
+      <div>
+        <div style="font-size:16px;font-weight:700;color:var(--t1);letter-spacing:-.2px;">BillKadai</div>
+        <div style="font-size:11.5px;color:var(--t3);margin-top:1px;">Billing & POS · Android · Free</div>
+      </div>
+      <button class="modal-close-btn" onclick="closeModal()" aria-label="Close">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <line x1="1" y1="1" x2="9" y2="9"/><line x1="9" y1="1" x2="1" y2="9"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Scrollable body -->
+    <div class="modal-body">
+
+      <!-- About -->
+      <div class="modal-sec">
+        <div class="modal-sec-title">About</div>
+        <p style="font-size:14px;color:var(--t2);line-height:1.7;">BillKadai is a fast, offline-first billing app built for every kind of small business in India. No internet, no subscription — just open the app and start billing.</p>
+      </div>
+
+      <!-- Features -->
+      <div class="modal-sec">
+        <div class="modal-sec-title">All Features</div>
+        <div class="modal-feat-list">
+          <div class="modal-feat">
+            <div class="modal-feat-icon">⚡</div>
+            <div><div class="modal-feat-title">Fast Billing</div><div class="modal-feat-desc">Create a complete bill in under 5 seconds</div></div>
+          </div>
+          <div class="modal-feat">
+            <div class="modal-feat-icon">📶</div>
+            <div><div class="modal-feat-title">100% Offline</div><div class="modal-feat-desc">Works without Wi-Fi or mobile data</div></div>
+          </div>
+          <div class="modal-feat">
+            <div class="modal-feat-icon">💰</div>
+            <div><div class="modal-feat-title">UPI QR Payments</div><div class="modal-feat-desc">Auto-generated QR code on every bill</div></div>
+          </div>
+          <div class="modal-feat">
+            <div class="modal-feat-icon">🧾</div>
+            <div><div class="modal-feat-title">GST Support</div><div class="modal-feat-desc">Inclusive & exclusive tax calculation</div></div>
+          </div>
+          <div class="modal-feat">
+            <div class="modal-feat-icon">📊</div>
+            <div><div class="modal-feat-title">Sales Reports</div><div class="modal-feat-desc">Daily, weekly and monthly breakdowns</div></div>
+          </div>
+          <div class="modal-feat">
+            <div class="modal-feat-icon">☁️</div>
+            <div><div class="modal-feat-title">Cloud Backup</div><div class="modal-feat-desc">Auto backup, restore on any device</div></div>
+          </div>
+          <div class="modal-feat">
+            <div class="modal-feat-icon">👥</div>
+            <div><div class="modal-feat-title">Staff Management</div><div class="modal-feat-desc">Add staff with individual PIN access</div></div>
+          </div>
+          <div class="modal-feat">
+            <div class="modal-feat-icon">📤</div>
+            <div><div class="modal-feat-title">Share Bills</div><div class="modal-feat-desc">Send via WhatsApp, SMS or any app</div></div>
+          </div>
+          <div class="modal-feat">
+            <div class="modal-feat-icon">🌐</div>
+            <div><div class="modal-feat-title">5 Languages</div><div class="modal-feat-desc">EN · தமிழ் · हिन्दी · తెలుగు · ಕನ್ನಡ</div></div>
+          </div>
+          <div class="modal-feat">
+            <div class="modal-feat-icon">🔒</div>
+            <div><div class="modal-feat-title">Secure & Private</div><div class="modal-feat-desc">All data stays on your device</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pricing note -->
+      <div style="background:var(--bg2);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+        <div style="width:7px;height:7px;background:var(--green);border-radius:50%;flex-shrink:0;"></div>
+        <span style="font-size:13px;color:var(--t2);">Free forever — no subscription, no hidden charges</span>
+      </div>
+
+    </div>
+
+    <!-- Sticky footer CTA -->
+    <div class="modal-footer">
+      <a href="https://play.google.com/store/apps/details?id=com.billkadai.app" target="_blank" rel="noopener"
+         class="btn btn-brand" style="width:100%;justify-content:center;padding:13px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.37.21.79.24 1.18.07l13.98-8.07-3.03-3.03L3.18 23.76zM.29 1.52C.11 1.9.01 2.34.01 2.83v18.35c0 .49.1.93.28 1.31l.07.07L10.48 12.1v-.21L.36 1.45l-.07.07zm20.63 8.88L17.34 8.3l-3.37 3.37 3.37 3.37 3.6-2.09c1.03-.6 1.03-1.56-.02-2.15zM4.36.24C3.97.07 3.55.1 3.18.31L16.31 13.44l-3.03 3.03L4.36.24z"/></svg>
+        Download Free on Google Play
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  /* ── THEME ── */
+  function setThemeLabel(t) {
+    var el = document.getElementById('tt-label');
+    if (el) el.textContent = t === 'dark' ? 'Light' : 'Dark';
+  }
+
+  (function(){
+    var t = localStorage.getItem('nwo-theme') || 'light';
+    document.documentElement.setAttribute('data-theme', t);
+    setThemeLabel(t);
+  })();
+
+  document.getElementById('themeToggle').addEventListener('click', function(){
+    var html = document.documentElement;
+    var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.classList.add('switching');
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('nwo-theme', next);
+    setThemeLabel(next);
+    setTimeout(function(){ html.classList.remove('switching'); }, 350);
+  });
+
+  /* ── DRAWER ── */
+  function openModal(){
+    var m = document.getElementById('modal');
+    m.classList.remove('closing');
+    m.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(){
+    var m = document.getElementById('modal');
+    m.classList.add('closing');
+    setTimeout(function(){
+      m.classList.remove('open','closing');
+      document.body.style.overflow = '';
+    }, 280);
+  }
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+
+  /* ── SCROLL REVEAL ── */
+  var revealObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.reveal').forEach(function(el){ revealObs.observe(el); });
+
+  /* ── STAGGER GRIDS ── */
+  var staggerObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        staggerObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.stagger').forEach(function(el){ staggerObs.observe(el); });
+
+  /* ── NAV SCROLL SHADOW ── */
+  window.addEventListener('scroll', function(){
+    document.querySelector('.nav').classList.toggle('scrolled', window.scrollY > 8);
+  }, { passive: true });
+
+  /* ── STAT COUNTER + POP ── */
+  function countUp(el, end, delay, duration) {
+    setTimeout(function(){
+      var startTime = null;
+      function tick(ts){
+        if(!startTime) startTime = ts;
+        var prog = Math.min((ts - startTime) / duration, 1);
+        var eased = 1 - Math.pow(1 - prog, 3);
+        el.textContent = Math.round(eased * end);
+        if(prog < 1) requestAnimationFrame(tick);
+        else el.textContent = end;
+      }
+      requestAnimationFrame(tick);
+    }, delay);
+  }
+
+  var statsObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting) return;
+      var items = entry.target.querySelectorAll('.stat-item');
+      items.forEach(function(item){ item.classList.add('popped'); });
+      var ns = entry.target.querySelectorAll('.stat-n');
+      if(ns[0]) countUp(ns[0], 1, 0,   600);
+      if(ns[1]) countUp(ns[1], 5, 90,  700);
+      statsObs.unobserve(entry.target);
+    });
+  }, { threshold: 0.4 });
+  var strip = document.querySelector('.stats-strip');
+  if(strip) statsObs.observe(strip);
+
+  /* ── PREMIUM VIDEO PLAYER ── */
+  (function(){
+    var vp       = document.getElementById('vp');
+    var vid      = document.getElementById('vpVid');
+    if(!vp || !vid) return;
+
+    var playBtn  = document.getElementById('vpPlayBtn');
+    var muteBtn  = document.getElementById('vpMuteBtn');
+    var fsBtn    = document.getElementById('vpFsBtn');
+    var volSlider= document.getElementById('vpVol');
+    var progWrap = document.getElementById('vpProgWrap');
+    var played   = document.getElementById('vpPlayed');
+    var buf      = document.getElementById('vpBuf');
+    var thumb    = document.getElementById('vpThumb');
+    var timeEl   = document.getElementById('vpTime');
+    var centerBtn= document.getElementById('vpCenterBtn');
+
+    /* ── Helpers ── */
+    var PLAY_ICON  = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+    var PAUSE_ICON = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+    var MUTE_ICON  = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12A4.5 4.5 0 0014 7.97v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.796 8.796 0 0021 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06A8.99 8.99 0 0017.73 18L19 19.27 20.27 18 5.27 3 4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>';
+    var VOL_ICON   = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>';
+
+    function fmt(s) {
+      if(isNaN(s)) return '0:00';
+      var m = Math.floor(s/60), sec = Math.floor(s%60);
+      return m + ':' + (sec<10?'0':'') + sec;
+    }
+
+    function setPlayState(paused) {
+      if(paused) { vp.classList.add('paused'); playBtn.innerHTML = PLAY_ICON; }
+      else       { vp.classList.remove('paused'); playBtn.innerHTML = PAUSE_ICON; }
+      centerBtn.innerHTML = paused
+        ? '<svg width="22" height="22" viewBox="0 0 24 24" fill="#111"><path d="M8 5v14l11-7z"/></svg>'
+        : '<svg width="22" height="22" viewBox="0 0 24 24" fill="#111"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+    }
+
+    function setMuteState(muted) {
+      muteBtn.innerHTML = muted ? MUTE_ICON : VOL_ICON;
+      volSlider.value   = muted ? 0 : vid.volume;
+    }
+
+    /* ── Play / Pause ── */
+    function togglePlay(){
+      if(vid.paused) vid.play(); else vid.pause();
+    }
+
+    /* Click on player body */
+    vp.addEventListener('click', function(e){
+      if(e.target.closest('.vp-ctrl')) return;
+      togglePlay();
+      var r = document.createElement('div');
+      r.className = 'vp-ripple';
+      var rect = vp.getBoundingClientRect();
+      r.style.left = (e.clientX - rect.left) + 'px';
+      r.style.top  = (e.clientY - rect.top)  + 'px';
+      vp.appendChild(r);
+      setTimeout(function(){ r.remove(); }, 500);
+    });
+
+    playBtn.addEventListener('click', function(e){ e.stopPropagation(); togglePlay(); });
+
+    vid.addEventListener('play',  function(){ setPlayState(false); });
+    vid.addEventListener('pause', function(){ setPlayState(true);  });
+    vid.addEventListener('ended', function(){ setPlayState(true); vid.currentTime = 0; });
+    vid.addEventListener('waiting', function(){ vp.classList.add('loading'); });
+    vid.addEventListener('canplay', function(){ vp.classList.remove('loading'); });
+
+    /* ── Progress ── */
+    vid.addEventListener('timeupdate', function(){
+      if(!vid.duration) return;
+      var pct = (vid.currentTime / vid.duration) * 100;
+      played.style.width = pct + '%';
+      thumb.style.left   = pct + '%';
+      timeEl.textContent = fmt(vid.currentTime) + ' / ' + fmt(vid.duration);
+    });
+    vid.addEventListener('progress', function(){
+      if(vid.buffered.length){
+        buf.style.width = (vid.buffered.end(vid.buffered.length-1) / vid.duration * 100) + '%';
+      }
+    });
+    vid.addEventListener('loadedmetadata', function(){
+      timeEl.textContent = '0:00 / ' + fmt(vid.duration);
+    });
+
+    /* Scrubbing */
+    var scrubbing = false;
+    function scrubTo(e){
+      var rect = progWrap.getBoundingClientRect();
+      var pct  = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      if(vid.duration) vid.currentTime = pct * vid.duration;
+    }
+    progWrap.addEventListener('mousedown', function(e){ scrubbing = true; scrubTo(e); e.preventDefault(); });
+    document.addEventListener('mousemove', function(e){ if(scrubbing) scrubTo(e); });
+    document.addEventListener('mouseup',   function(){ scrubbing = false; });
+    progWrap.addEventListener('touchstart', function(e){
+      scrubbing = true;
+      var rect = progWrap.getBoundingClientRect();
+      var pct  = Math.max(0, Math.min(1, (e.touches[0].clientX - rect.left) / rect.width));
+      if(vid.duration) vid.currentTime = pct * vid.duration;
+      e.preventDefault();
+    },{ passive:false });
+    document.addEventListener('touchmove', function(e){
+      if(!scrubbing) return;
+      var rect = progWrap.getBoundingClientRect();
+      var pct  = Math.max(0, Math.min(1, (e.touches[0].clientX - rect.left) / rect.width));
+      if(vid.duration) vid.currentTime = pct * vid.duration;
+    },{ passive:true });
+    document.addEventListener('touchend', function(){ scrubbing = false; });
+
+    /* ── Volume ── */
+    muteBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      vid.muted = !vid.muted;
+      setMuteState(vid.muted);
+    });
+    volSlider.addEventListener('input', function(e){
+      e.stopPropagation();
+      vid.volume = parseFloat(this.value);
+      vid.muted  = vid.volume === 0;
+      setMuteState(vid.muted);
+    });
+    volSlider.addEventListener('click', function(e){ e.stopPropagation(); });
+
+    /* ── Fullscreen ── */
+    fsBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      if(!document.fullscreenElement) {
+        (vp.requestFullscreen || vp.webkitRequestFullscreen).call(vp);
+      } else {
+        (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      }
+    });
+    document.addEventListener('fullscreenchange', function(){
+      vp.classList.toggle('fullscreen', !!document.fullscreenElement);
+    });
+
+    /* ── Auto-hide controls ── */
+    var hideTimer;
+    function showUI(){
+      vp.classList.add('show-ui');
+      clearTimeout(hideTimer);
+      if(!vid.paused){
+        hideTimer = setTimeout(function(){ vp.classList.remove('show-ui'); }, 3000);
+      }
+    }
+    vp.addEventListener('mousemove', showUI);
+    vp.addEventListener('mouseleave', function(){
+      if(!vid.paused) vp.classList.remove('show-ui');
+    });
+    vp.addEventListener('touchstart', showUI, { passive:true });
+
+    /* ── Keyboard ── */
+    document.addEventListener('keydown', function(e){
+      if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if(e.code === 'Space')      { e.preventDefault(); togglePlay(); }
+      if(e.code === 'ArrowRight') { vid.currentTime = Math.min(vid.duration||0, vid.currentTime+5); }
+      if(e.code === 'ArrowLeft' ) { vid.currentTime = Math.max(0, vid.currentTime-5); }
+      if(e.code === 'KeyM')       { vid.muted = !vid.muted; setMuteState(vid.muted); }
+      if(e.code === 'KeyF')       { fsBtn.click(); }
+    });
+
+    /* Init */
+    setPlayState(true);
+    setMuteState(false);
+  })();
+</script>
+
+</body>
+</html>
