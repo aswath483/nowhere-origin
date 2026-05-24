@@ -1170,15 +1170,17 @@
           Explore BillKadai
           <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
-        <a href="#about" class="btn btn-outline">About Us</a>
+        <a href="#taleme" class="btn btn-outline">Explore TaleMe</a>
       </div>
       <p class="a5 small-text">2 apps &nbsp;·&nbsp; Android &nbsp;·&nbsp; Free &amp; Freemium</p>
     </div>
 
-    <!-- Right: BillKadai Product Card -->
-    <div class="hero-right a3">
-      <div class="product-card">
-        <div class="product-card-header">
+    <!-- Right: Two App Cards -->
+    <div class="hero-right a3" style="display:flex;flex-direction:column;gap:14px;">
+
+      <!-- BillKadai -->
+      <div class="product-card" style="padding:20px;">
+        <div class="product-card-header" style="padding-bottom:14px;margin-bottom:14px;">
           <div class="product-icon-wrap">
             <img src="billkadai-icon.png" alt="BillKadai">
           </div>
@@ -1188,35 +1190,50 @@
           </div>
           <div style="margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
             <span style="font-size:11px;font-weight:600;color:var(--t3);">FREE</span>
-            <div style="display:flex;gap:1px;">
-              <span style="color:var(--brand);font-size:12px;">★★★★★</span>
-            </div>
+            <div style="display:flex;gap:1px;"><span style="color:var(--brand);font-size:12px;">★★★★★</span></div>
           </div>
         </div>
-
-        <p class="product-desc">
-          The fastest offline billing app for tea shops, hotels, bakeries, and every small business. Replace your paper notebook with a smart digital billing system — no internet required.
-        </p>
-
-        <ul class="feature-list">
-          <li>Create bills in under 5 seconds</li>
-          <li>Works 100% offline — no internet needed</li>
+        <p class="product-desc" style="margin-bottom:14px;font-size:13px;">Offline billing for every small shop. Create bills in 5 seconds — no internet required.</p>
+        <ul class="feature-list" style="margin-bottom:14px;">
+          <li>Works 100% offline</li>
           <li>UPI QR code on every bill</li>
-          <li>GST inclusive & exclusive support</li>
-          <li>Daily, weekly, monthly sales reports</li>
-          <li>5 Indian languages supported</li>
+          <li>GST support · 5 languages</li>
         </ul>
-
         <div class="product-cta">
           <a href="https://play.google.com/store/apps/details?id=com.billkadai.app" target="_blank" rel="noopener" class="btn btn-brand btn-sm">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.37.21.79.24 1.18.07l13.98-8.07-3.03-3.03L3.18 23.76zM.29 1.52C.11 1.9.01 2.34.01 2.83v18.35c0 .49.1.93.28 1.31l.07.07L10.48 12.1v-.21L.36 1.45l-.07.07zm20.63 8.88L17.34 8.3l-3.37 3.37 3.37 3.37 3.6-2.09c1.03-.6 1.03-1.56-.02-2.15zM4.36.24C3.97.07 3.55.1 3.18.31L16.31 13.44l-3.03 3.03L4.36.24z"/></svg>
-            Download on Play Store
+            Download Free
           </a>
-          <button class="btn btn-outline btn-sm" onclick="openModal()" style="cursor:pointer;">
-            See all features
-          </button>
+          <button class="btn btn-outline btn-sm" onclick="openModal()" style="cursor:pointer;">All features</button>
         </div>
       </div>
+
+      <!-- TaleMe -->
+      <div class="product-card" style="padding:20px;">
+        <div class="product-card-header" style="padding-bottom:14px;margin-bottom:14px;">
+          <div class="product-icon-wrap">
+            <img src="taleme-icon.png" alt="TaleMe">
+          </div>
+          <div>
+            <div class="product-name">TaleMe</div>
+            <div class="product-category" style="background:var(--blue-bg);border-color:rgba(59,91,219,.18);color:var(--blue);">AI Stories · Kids</div>
+          </div>
+          <div style="margin-left:auto;">
+            <div class="coming-badge"><div class="coming-dot"></div>Coming Soon</div>
+          </div>
+        </div>
+        <p class="product-desc" style="margin-bottom:14px;font-size:13px;">AI bedtime stories where your child is the hero. Every story is unique, powered by Claude AI.</p>
+        <ul class="feature-list" style="margin-bottom:14px;">
+          <li>Your child is the hero</li>
+          <li>Branching story choices</li>
+          <li>Powered by Claude AI</li>
+        </ul>
+        <div class="product-cta">
+          <a href="#taleme" class="btn btn-outline btn-sm">Learn More</a>
+          <span class="product-cta-note">Free · Freemium</span>
+        </div>
+      </div>
+
     </div>
 
   </div>
