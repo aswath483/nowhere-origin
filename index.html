@@ -1114,6 +1114,78 @@
     transform: translateY(14px) scale(.98);
   }
   .stagger.feat-grid.visible > * { transform: none; }
+
+  /* ═══════════════════════════════════════
+     QUICK NAV STRIP
+  ═══════════════════════════════════════ */
+  .quick-nav {
+    position: fixed;
+    top: 56px; left: 0; right: 0;
+    z-index: 150;
+    height: 40px;
+    background: rgba(248,248,246,.94);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    transform: translateY(-100%);
+    transition: transform .32s cubic-bezier(.16,1,.3,1);
+    pointer-events: none;
+  }
+  [data-theme="dark"] .quick-nav { background: rgba(10,10,10,.90); }
+  .quick-nav.qn-visible { transform: translateY(0); pointer-events: auto; }
+
+  .quick-nav-inner {
+    max-width: 1100px; margin: 0 auto;
+    padding: 0 40px;
+    height: 100%;
+    display: flex; align-items: center; gap: 2px;
+  }
+  .quick-nav-link {
+    display: flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 7px;
+    font-size: 13px; font-weight: 500;
+    color: var(--t3); text-decoration: none;
+    transition: color .15s, background .15s;
+    white-space: nowrap;
+  }
+  .quick-nav-link:hover { color: var(--t1); background: var(--bg2); }
+  .quick-nav-link.qn-active { color: var(--t1); background: var(--bg2); font-weight: 600; }
+  .quick-nav-icon {
+    width: 17px; height: 17px;
+    border-radius: 4px; flex-shrink: 0;
+    object-fit: cover;
+  }
+  .quick-nav-sep {
+    width: 1px; height: 16px;
+    background: var(--border-s);
+    margin: 0 6px; flex-shrink: 0;
+  }
+  @media (max-width: 960px) { .quick-nav-inner { padding: 0 16px; } }
+  @media (max-width: 560px) {
+    .quick-nav-link { font-size: 12px; padding: 4px 9px; gap: 5px; }
+    .quick-nav-icon { width: 15px; height: 15px; }
+  }
+
+  /* ═══════════════════════════════════════
+     STORY QUOTE BLOCK
+  ═══════════════════════════════════════ */
+  .story-block {
+    margin-top: 22px;
+    padding: 18px 20px;
+    border-left: 3px solid var(--brand);
+    background: var(--brand-bg);
+    border-radius: 0 10px 10px 0;
+  }
+  .story-block p {
+    font-size: 14px; color: var(--t2);
+    line-height: 1.8; font-style: italic;
+  }
+  .story-block cite {
+    display: block; margin-top: 10px;
+    font-size: 12.5px; color: var(--t3);
+    font-weight: 600; font-style: normal;
+    letter-spacing: .2px;
+  }
   </style>
 </head>
 
@@ -1148,6 +1220,23 @@
     </a>
   </div>
 </nav>
+
+<!-- ═══════════════════ QUICK NAV ═══════════════════ -->
+<div class="quick-nav" id="quickNav" aria-hidden="true">
+  <div class="quick-nav-inner">
+    <a href="#product" class="quick-nav-link" data-qn="product">
+      <img src="billkadai-icon.png" class="quick-nav-icon" alt="">
+      BillKadai
+    </a>
+    <a href="#taleme" class="quick-nav-link" data-qn="taleme">
+      <img src="taleme-icon.png" class="quick-nav-icon" alt="">
+      TaleMe
+    </a>
+    <div class="quick-nav-sep"></div>
+    <a href="#about" class="quick-nav-link" data-qn="about">About</a>
+    <a href="#contact" class="quick-nav-link" data-qn="contact">Contact</a>
+  </div>
+</div>
 
 <!-- ═══════════════════ HERO ═══════════════════ -->
 <div class="hero-wrap">
@@ -1222,11 +1311,11 @@
             <div class="coming-badge"><div class="coming-dot"></div>Coming Soon</div>
           </div>
         </div>
-        <p class="product-desc" style="margin-bottom:14px;font-size:13px;">AI bedtime stories where your child is the hero. Every story is unique, powered by Claude AI.</p>
+        <p class="product-desc" style="margin-bottom:14px;font-size:13px;">AI bedtime stories where your child is the hero. Every story is unique, generated live by AI.</p>
         <ul class="feature-list" style="margin-bottom:14px;">
           <li>Your child is the hero</li>
           <li>Branching story choices</li>
-          <li>Powered by Claude AI</li>
+          <li>Powered by AI</li>
         </ul>
         <div class="product-cta">
           <a href="#taleme" class="btn btn-outline btn-sm">Learn More</a>
@@ -1496,7 +1585,7 @@
           Our Second App
         </div>
         <h2 class="title" style="margin-bottom:14px;">Meet TaleMe</h2>
-        <p class="subtitle" style="margin-bottom:20px;">TaleMe is an AI-powered interactive story app where your child is the hero. Every story is unique, personalized, and generated live by Claude AI.</p>
+        <p class="subtitle" style="margin-bottom:20px;">TaleMe is an AI-powered interactive story app where your child is the hero. Every story is unique, personalized, and generated live by AI.</p>
         <p class="body-text" style="margin-bottom:20px;">We built it because bedtime stories should never be boring. Kids pick their name, age, and favorite theme — TaleMe generates a branching adventure where every choice shapes the story.</p>
         <p class="body-text">Free to start. Premium unlocks unlimited stories, AI illustrations, and PDF export. No ads — ever.</p>
       </div>
@@ -1511,7 +1600,7 @@
         </div>
         <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 20px;">
           <div class="small-text" style="margin-bottom:6px;">Powered by</div>
-          <div style="font-size:14px;font-weight:600;color:var(--t1);">Claude AI (Anthropic)</div>
+          <div style="font-size:14px;font-weight:600;color:var(--t1);">AI-powered</div>
         </div>
         <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 20px;">
           <div class="small-text" style="margin-bottom:6px;">For</div>
@@ -1541,7 +1630,7 @@
         </div>
 
         <p class="product-desc">
-          The most magical bedtime story app for kids. Your child picks their name, age, and theme — Claude AI crafts a unique branching adventure just for them, every single night.
+          The most magical bedtime story app for kids. Your child picks their name, age, and theme — AI crafts a unique branching adventure just for them, every single night.
         </p>
 
         <ul class="feature-list">
@@ -1610,7 +1699,7 @@
 
         <div style="background:var(--blue-bg);border:1px solid rgba(59,91,219,.18);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:10px;">
           <div style="width:7px;height:7px;background:var(--blue);border-radius:50%;flex-shrink:0;"></div>
-          <span style="font-size:13px;color:var(--t2);">Premium uses <strong style="color:var(--t1);">Claude Sonnet</strong> for richer, more detailed stories</span>
+          <span style="font-size:13px;color:var(--t2);">Premium uses a <strong style="color:var(--t1);">more powerful AI model</strong> for richer, more detailed stories</span>
         </div>
 
         <!-- How it works for TaleMe -->
@@ -1623,7 +1712,7 @@
             </div>
             <div style="display:flex;align-items:flex-start;gap:12px;">
               <div style="width:28px;height:28px;flex-shrink:0;background:var(--blue-bg);border:1px solid rgba(59,91,219,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--blue);">2</div>
-              <div><div style="font-size:14px;font-weight:600;color:var(--t1);">AI writes the adventure</div><div style="font-size:12.5px;color:var(--t3);margin-top:2px;">Claude creates a unique story starring your child</div></div>
+              <div><div style="font-size:14px;font-weight:600;color:var(--t1);">AI writes the adventure</div><div style="font-size:12.5px;color:var(--t3);margin-top:2px;">A unique story is generated starring your child</div></div>
             </div>
             <div style="display:flex;align-items:flex-start;gap:12px;">
               <div style="width:28px;height:28px;flex-shrink:0;background:var(--blue-bg);border:1px solid rgba(59,91,219,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--blue);">3</div>
@@ -1647,6 +1736,10 @@
         <p class="subtitle" style="margin-bottom:14px;">We are an independent software studio. We don't build for investors or to raise funding — we build for the shop owner who needs something that just works.</p>
         <p class="body-text" style="margin-bottom:14px;">Our name, Nowhere Origin, reflects where our products are built for — businesses in every corner of the world, not just big cities.</p>
         <p class="body-text">Every product we release is offline-first, free to use, and designed to be simple enough for anyone to learn in minutes.</p>
+        <div class="story-block">
+          <p>We started because we saw the same problem everywhere — small businesses running on paper, missing tools that bigger stores take for granted. Every product we build asks the same question: what would make this person's day a little easier?</p>
+          <cite>— Nowhere Origin</cite>
+        </div>
       </div>
       <div class="vals-grid stagger">
         <div class="val-card">
@@ -2089,6 +2182,39 @@
     /* Init */
     setPlayState(true);
     setMuteState(false);
+  })();
+
+  /* ── QUICK NAV ── */
+  (function(){
+    var qn     = document.getElementById('quickNav');
+    var hero   = document.querySelector('.hero-wrap');
+    var qnLinks = document.querySelectorAll('.quick-nav-link[data-qn]');
+    if(!qn || !hero) return;
+
+    /* Show/hide based on whether hero is visible */
+    var heroObs = new IntersectionObserver(function(entries){
+      var hiding = !entries[0].isIntersecting;
+      qn.classList.toggle('qn-visible', hiding);
+      qn.setAttribute('aria-hidden', hiding ? 'false' : 'true');
+    }, { threshold: 0.15 });
+    heroObs.observe(hero);
+
+    /* Active section tracking */
+    var tracked = ['product','taleme','about','contact'];
+    var sectionObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!e.isIntersecting) return;
+        var id = e.target.id;
+        qnLinks.forEach(function(l){
+          l.classList.toggle('qn-active', l.dataset.qn === id);
+        });
+      });
+    }, { rootMargin: '-10% 0px -65% 0px', threshold: 0 });
+
+    tracked.forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) sectionObs.observe(el);
+    });
   })();
 </script>
 
